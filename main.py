@@ -1,4 +1,4 @@
-import time                                                                                                                                                                                                        
+import time, math                                                                                                                                                                                                      
 import grovepi                                                                                                                                                                                                          
 from grovepi import * 
 from grove_rgb_lcd import *                                                                                                                                                                                                    
@@ -44,8 +44,9 @@ while True:
 
         # Show Temperature
         if (grovepi.digitalRead(touch_sensor)==1):
-            setText("TEMP: ", ceil(temp))
+            setText("TEMP: ", math.ceil(temp))
             time.sleep(2)
+            setText("")
         
 
                                                                                                                                                                          
