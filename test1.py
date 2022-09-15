@@ -62,7 +62,7 @@ class Registros():
         return self.id
     #   Regresa la temperatura en formato de grados C
     def getTempString(self):
-        return str(self.temperature) + "° C"
+        return str(self.temperature) + " C"
     #   Cambia el ID
     def setId(self, nid):
         id = nid
