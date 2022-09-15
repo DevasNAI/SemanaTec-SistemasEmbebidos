@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 # Getting the current date and time
 dt = datetime.now()
-
+ids = 1
 class Registros():
     """
         Clase Registros
@@ -62,10 +62,11 @@ class Registros():
     
 #   Prueba de registros
 registros = [
-  {'id': 1, 'temperature':"value", 'time':dt, 'stable': "false"},
-  {'id': 2, 'temperature':"value", 'time':"time-stamp", 'stable': "true"}
+    Registros(ids, 27).getRegister(),
+    Registros(ids+1, 29).getRegister()
 ]
-print(type(registros))
+
+
 #   Muestra la página principal
 @app.route("/")
 def hello():
