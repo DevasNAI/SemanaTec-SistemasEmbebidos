@@ -20,7 +20,8 @@ time.sleep(1)
 while True:                                                                                                                                                                                                          
     try:
         # LCD
-        setRGB(0,255,0)
+        setRGB(0,0,255)
+        setText("")
 
         #Touch Sensor                                                                                                                                                                                                          
         print(grovepi.digitalRead(touch_sensor))
@@ -34,16 +35,16 @@ while True:
         if (temp>=28):
             digitalWrite(led,1)             # Send HIGH to switch on LED
             print ("LED ON!")
-            time.sleep(1)
+            time.sleep(.5)
         else:
             digitalWrite(led,0)             # Send LOW to switch off LED
             print ("LED OFF!")
-            time.sleep(1)
+            time.sleep(.5)
         
 
         # Show Temperature
         if (grovepi.digitalRead(touch_sensor)==1):
-            setText("Show TEMP")
+            setText("TEMP: ", ceil(temp))
             time.sleep(2)
         
 
