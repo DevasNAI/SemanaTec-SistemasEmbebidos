@@ -74,7 +74,7 @@ class Registros():
     def getStable(self):
         return self.stable
     def getRegister(self):
-        return {'id': str(self.id), 'temperature': str(self.temperature) + " C", 'time': str(self.time), 'stable': str(self.stable)}
+        return {'id': self.id, 'temperature': str(self.temperature) + " C", 'time': str(self.time), 'stable': str(self.stable)}
 
 
 grovepi.pinMode(touch_sensor,"INPUT")   
@@ -95,7 +95,7 @@ def sensoring():
     temp = grovepi.temp(temp_sensor,'1.1')
     print("temp =", temp)
     time.sleep(.5) 
-    registrado = Registros(ids, 27).getRegister()
+    registrado = Registros(ids+1, 27).getRegister()
     registros.append(registrado)
     #Blink the LED
     if (temp>=28):
