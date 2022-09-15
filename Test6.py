@@ -179,7 +179,7 @@ def getTempId(id):
         return jsonify({"error": e})
 
 #   Borrar los datos de temperatura
-@app.route('/updated-temperature/<int:id>',methods=['DELETE'])
+@app.route('/delete-temperature/<int:id>',methods=['DELETE'])
 def delTemp(id):
     try:
         #   Busca el registro
