@@ -68,7 +68,7 @@ registros = [
 # print(type(registros))
 
 
-#   Muestra la página principal
+#  Muestra la página principal
 @app.route("/")
 def hello():
     sensoring()
@@ -78,7 +78,7 @@ def hello():
 @app.route('/updated-temperature',methods=['GET'])
 def getTemp():
     try:
-        sensoring
+        sensoring()
         return jsonify( registros )
     except (IOError, TypeError) as e:
         return jsonify({"error": e})
