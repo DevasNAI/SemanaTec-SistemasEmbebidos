@@ -19,11 +19,12 @@ touch_sensor = 4
 temp_sensor = 0 
 # Connect the Grove LED to digital port D4
 led = 3
-ids = 1
+global ids = 1
+global temp = 0
 
-registros = [
-  {'id': 1, 'temperature':"value", 'time':"time-stamp", 'stable': "stability"},
-  {'id': 2, 'temperature':"value", 'time':"time-stamp", 'stable': "stability"}
+global registros = [
+  {'id': ids, 'temperature':"value", 'time':"time-stamp", 'stable': "stability"},
+  {'id': ids+1, 'temperature':"value", 'time':"time-stamp", 'stable': "stability"}
 ]
 
 class Registros():
@@ -76,28 +77,33 @@ class Registros():
     def getRegister(self):
         return {'id': self.id, 'temperature': str(self.temperature) + " C", 'time': str(self.time), 'stable': str(self.stable)}
 
+def groveSetup():
+    grovepi.pinMode(touch_sensor,"INPUT")   
 
-grovepi.pinMode(touch_sensor,"INPUT")   
+    pinMode(led,"OUTPUT") 
+                                                                                                                                                                                                   
+    time.sleep(1)
 
-pinMode(led,"OUTPUT")                                                                                                                                                                                                
-time.sleep(1)
+groveSetup()
 
-
-def sensoring():
+def LCDinit():
     # LCD
     setRGB(0,0,255)
     setText("")
 
-    #Touch Sensor                                                                                                                                                                                                          
-    print(grovepi.digitalRead(touch_sensor))
-
+def tempReading():
     #Temp Sensor
     temp = grovepi.temp(temp_sensor,'1.1')
     print("temp =", temp)
     time.sleep(.5) 
+    #   Genera un nuevo registro
     registrado = Registros(ids+1, 27).getRegister()
+    #   Agrega el registro en los registros de la API
     registros.append(registrado)
+
+def toggleLED():
     #Blink the LED
+    #   Temperature Higher to 28 C
     if (temp>=28):
         digitalWrite(led,1)             # Send HIGH to switch on LED
         print ("LED ON!")
@@ -107,18 +113,28 @@ def sensoring():
         print ("LED OFF!")
         time.sleep(.5)
 
-    # Show Temperature
-    if (grovepi.digitalRead(touch_sensor)==1):
+def sensoring():
+    LCDinit()
+
+    #Touch Sensor                                                                                                                                                                                                          
+    print(grovepi.digitalRead(touch_sensor))
+
+    #Temp Sensor
+    tempReading()
+
+    #   Turn LED on or off 
+    toggleLED()
+
+    # Show Temperature if touch sensor is touched
+    if (grovepi.digitalRead(touch_sensor) == 1):
         print(temp)
         setText(str(temp))
         time.sleep(2)
         setText("")
 
 
+
 app = Flask(__name__)
-
-
-# print(type(registros))
 
 
 # Muestra la pagina principal
@@ -132,6 +148,8 @@ def hello():
 def getTemp():
     try:
         sensoring()
+
+
         return jsonify( registros )
     except (IOError, TypeError) as e:
         return jsonify({"error": e})
