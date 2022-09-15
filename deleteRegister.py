@@ -4,7 +4,7 @@ from flask import request, jsonify
 import time
 from datetime import datetime
 
-app = Flask(__name__)
+#app = Flask(__name__)
 ids = 1
 class Registros():
     """
@@ -73,58 +73,15 @@ registros = [
     {"id":10,"stable":"True","temperature":"27 C","time":"2022-09-15 02:10:54.095374"}
 ]
 
-#   Muestra la pagina principal
-@app.route("/")
-def hello():
-    return "Conexion exitosa: Datos de Clinica A405"
 
-#   Muestra los datos de la temperatura
-@app.route('/updated-temperature',methods=['GET'])
-def getTemp():
-    try:
-        #   Retorna los registros de temperatura
-        return jsonify( registros )
-    except (IOError, TypeError) as e:
-        return jsonify({"error": e})
+id = 1
 
-@app.route('/updated-temperature/<int:id>',methods=['GET'])
-def getTempId(id):
-    try:
-        #   Retorna un solo registro de temperatura
-        item = [reg for reg in registros if reg["id"] == id]
-        if(item == []):
-            return jsonify( "El registro no existe" )
-        else:
-            return jsonify( item[0] )
-    except (IOError, TypeError) as e:
-        return jsonify({"error": e})
-
-# Borrar los datos de temperatura
-@app.route('/updated-temperature/<int:id>',methods=['DELETE'])
-def delTemp(id):
-    try:
-        item = [reg for reg in registros if reg["id"] == id]
-        if(item == []):
-            return jsonify( "El registro no existe" )
-        else:
-            registros.remove(item[0])
-            return jsonify(item[0])  
-    except (IOError, TypeError) as e:
-        return jsonify({"error": e})
-
-
-
-@app.route('/sensores/lcd',methods=['PUT'])
-def setLCD():
-    try:
-        print(request.json)
-        texto = request.json["texto"]
-        return jsonify( {"texto": texto} )
-    except (IOError, TypeError) as e:
-        return jsonify({"error": e})
-
-if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=5000)
+for j in registros:
+    print(j)
+item = [reg for reg in registros if reg["id"] == id]
+print(item, "Hola")
+registros.remove(item[0])
+print(registros)
 
 
 # Borrar los datos de temperatura
@@ -138,3 +95,4 @@ if __name__ == "__main__":
 
  #   except (IOError, TypeError) as e:
   #      return jsonify({"error": e})
+
