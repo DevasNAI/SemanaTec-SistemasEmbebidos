@@ -23,12 +23,12 @@ global ids
 ids = 1
 global temp
 temp = 0
+global undetected 
+undetected = True
+
 
 global registros
-registros = [
-    {'id': ids, 'temperature':"value", 'time':"time-stamp", 'stable': "stability"},
-    {'id': ids+1, 'temperature':"value", 'time':"time-stamp", 'stable': "stability"}
-]
+registros = []
 
 class Registros():
     """
@@ -83,8 +83,8 @@ class Registros():
 def groveSetup():
     grovepi.pinMode(touch_sensor,"INPUT")   
 
-    pinMode(led,"OUTPUT")                                                                                                                                                                                                
-    
+    pinMode(led,"OUTPUT") 
+                                                                                                                                                                                                   
     time.sleep(1)
 
 groveSetup()
@@ -136,62 +136,67 @@ def sensoring():
         setText(str(temp))
         time.sleep(2)
         setText("")
+        global undetected
+        undetected = False
 
 
 
 app = Flask(__name__)
 
 
-# print(type(registros))
-
 # Muestra la pagina principal
 @app.route("/")
 def hello():
-    sensoring()
+    while (undetected):
+        sensoring()
     return "Conexion exitosa: Datos de Clinica A405"
 
 #   Muestra los datos de la temperatura
 @app.route('/updated-temperature',methods=['GET'])
 def getTemp():
     try:
-        sensoring()
+        while (undetected):
+            sensoring()
+        #   Retorna todos los registros de temperatura
         return jsonify( registros )
     except (IOError, TypeError) as e:
         return jsonify({"error": e})
 
-@app.route('/get-temperature/<int:id>',methods=['GET'])
-def getIdTemp(id):
+@app.route('/updated-temperature/<int:id>',methods=['GET'])
+def getTempId(id):
     try:
-            #   Retorna un solo registro de temperatura
+        #   Retorna un solo registro de temperatura con un ID
         item = [reg for reg in registros if reg["id"] == id]
-        return jsonify( item[0] )
+        if(item == []):
+            return jsonify( "El registro no existe" )
+        else:
+            return jsonify( item[0] )
     except (IOError, TypeError) as e:
         return jsonify({"error": e})
 
-    #   Borrar los datos de temperatura
+#   Borrar los datos de temperatura
 @app.route('/updated-temperature/<int:id>',methods=['DELETE'])
 def delTemp(id):
     try:
+        #   Busca el registro
         item = [reg for reg in registros if reg["id"] == id]
-        registros.remove(item[0])
-        return jsonify( item[0] )
-
-
+        if(item == []):
+            return jsonify( "El registro no existe" )
+        else:
+            registros.remove(item[0])
+            return jsonify(item[0])   
     except (IOError, TypeError) as e:
         return jsonify({"error": e})
 
-@app.route('/post-temp',methods=['POST'])
-def setLCD():
-    try:
-            #Funciones para publicarlo desde la app
-        temp = grovepi.temp(temp_sensor,'1.1')
-        ids += 1
-        registrado = Registros(ids, 27).getRegister()
-        registros.append(registrado)
-
-        return jsonify( registros[ids] )
-    except (IOError, TypeError) as e:
-        return jsonify({"error": e})
+# @app.route('/sensores/lcd',methods=['PUT'])
+# def setLCD():
+#     try:
+#         print(request.json)
+#         texto = request.json["texto"]
+#         return jsonify( {"texto": texto} )
+#     except (IOError, TypeError) as e:
+#         return jsonify({"error": e})
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=5000)
+    tempReading()
