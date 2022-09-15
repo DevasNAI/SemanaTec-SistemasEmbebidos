@@ -1,6 +1,7 @@
-import time                                                                                                                                                                                                          
+import time                                                                                                                                                                                                        
 import grovepi                                                                                                                                                                                                          
-from grovepi import *                                                                                                                                                                                                     
+from grovepi import * 
+from grove_rgb_lcd import *                                                                                                                                                                                                    
                                                                                                                                                                                                                      
 # Connect the Grove Touch Sensor to digital port D4                                                                                                                                                                  
 # SIG,NC,VCC,GND                                                                                                                                                                                                     
@@ -17,7 +18,10 @@ pinMode(led,"OUTPUT")
 time.sleep(1)
                                                                                                                                                                                                                      
 while True:                                                                                                                                                                                                          
-    try:   
+    try:
+        # LCD
+            setRGB(0,255,0)
+
         #Touch Sensor                                                                                                                                                                                                          
         print(grovepi.digitalRead(touch_sensor))
 
@@ -35,6 +39,13 @@ while True:
             digitalWrite(led,0)             # Send LOW to switch off LED
             print ("LED OFF!")
             time.sleep(1)
+        
+
+        # Show Temperature
+        if (grovepi.digitalRead(touch_sensor)==1):
+            setText("Show TEMP")
+            time.sleep(2)
+        
 
                                                                                                                                                                          
     except KeyboardInterrupt:
