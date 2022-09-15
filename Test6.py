@@ -132,7 +132,7 @@ def sensoring():
 
     # Show Temperature if touch sensor is touched
     if (grovepi.digitalRead(touch_sensor) == 1):
-        print(temp)
+        tempReading()
         setText(str(temp))
         time.sleep(2)
         setText("")
@@ -149,6 +149,8 @@ app = Flask(__name__)
 def hello():
     while (undetected):
         sensoring()
+    global undetected
+    undetected = True
     return "Conexion exitosa: Datos de Clinica A405"
 
 #   Muestra los datos de la temperatura
@@ -157,6 +159,8 @@ def getTemp():
     try:
         while (undetected):
             sensoring()
+        global undetected
+        undetected = True
         #   Retorna todos los registros de temperatura
         return jsonify( registros )
     except (IOError, TypeError) as e:
