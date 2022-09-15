@@ -68,7 +68,7 @@ registros = [
 # print(type(registros))
 
 
-#  Muestra la página principal
+#  Muestra la pagina principal
 @app.route("/")
 def hello():
     sensoring()
