@@ -50,12 +50,8 @@ while True:
             print(format(str(math.ceil(temp))))
             upperTemp = int(math.ceil(temp))
             print(upperTemp)
-            setText("TEMP: ".format(str(upperTemp)))
-            setCursor(0,1)
-            setText(str(temp))
+            setText(str(upperTemp))
             time.sleep(2)
-            setText("")
-            setCursor(0,0)
             setText("")
         
 
