@@ -91,7 +91,7 @@ def sensoring():
     #Temp Sensor
     temp = grovepi.temp(temp_sensor,'1.1')
     print("temp =", temp)
-    time.sleep(.5) 
+    time.sleep(.5)
     registrado = Registros(ids+1, 27).getRegister()
     registros.append(registrado)
 
@@ -135,7 +135,7 @@ while(True):
         except (IOError, TypeError) as e:
             return jsonify({"error": e})
 
-    @app.route('/updated-temperature/<int:id>',methods=['GET'])
+    @app.route('/get-temperature/<int:id>',methods=['GET'])
     def getIdTemp(id):
         try:
             #   Retorna un solo registro de temperatura
@@ -164,7 +164,7 @@ while(True):
             registrado = Registros(ids+1, 27).getRegister()
             registros.append(registrado)
 
-            return jsonify( registros )
+            return jsonify( registros[ids] )
         except (IOError, TypeError) as e:
             return jsonify({"error": e})
 
