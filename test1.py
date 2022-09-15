@@ -92,7 +92,7 @@ def getTemp():
 #     except (IOError, TypeError) as e:
 #         return jsonify({"error": e})
 
-#   En teoría debe borrar los datos de temperatura
+#   Borrar los datos de temperatura
 @app.route('/updated-temperature/<int:id>',methods=['DELETE'])
 def delTemp(id):
     try:
