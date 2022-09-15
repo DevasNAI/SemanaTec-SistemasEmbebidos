@@ -20,7 +20,7 @@ temp_sensor = 0
 # Connect the Grove LED to digital port D4
 led = 3
 global ids
-ids = 1
+ids = 0
 global temp
 temp = 0
 
@@ -53,6 +53,7 @@ class Registros():
             self.stable = False
         else:
             self.stable = True
+    
     #   Cambia la temperatura
     def setTemp(temp):
         temperature = temp
@@ -133,8 +134,6 @@ def sensoring():
         setText(str(temp))
         time.sleep(2)
         setText("")
-
-
 
 app = Flask(__name__)
 
