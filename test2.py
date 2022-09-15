@@ -21,6 +21,9 @@ temp_sensor = 0
 led = 3
 ids = 1
 
+global undetectedSensor
+undetectedSensor = True
+
 registros = [
   {'id': 1, 'temperature':"value", 'time':"time-stamp", 'stable': "stability"},
   {'id': 2, 'temperature':"value", 'time':"time-stamp", 'stable': "stability"}
@@ -81,8 +84,6 @@ grovepi.pinMode(touch_sensor,"INPUT")
 
 pinMode(led,"OUTPUT")                                                                                                                                                                                                
 time.sleep(1)
-
-undetectedSensor = True
 
 def sensoring():
     # LCD

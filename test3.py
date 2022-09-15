@@ -136,7 +136,7 @@ while(True):
         except (IOError, TypeError) as e:
             return jsonify({"error": e})
 
-    @app.route('/updated-temperature/<int:id>',methods=['GET'])
+    @app.route('/get-temperature/<int:id>',methods=['GET'])
     def getIdTemp(id):
         try:
             #   Retorna un solo registro de temperatura
@@ -166,7 +166,7 @@ while(True):
             registrado = Registros(ids, 27).getRegister()
             registros.append(registrado)
 
-            return jsonify( registros )
+            return jsonify( registros[ids] )
         except (IOError, TypeError) as e:
             return jsonify({"error": e})
 
