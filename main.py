@@ -20,7 +20,7 @@ time.sleep(1)
 while True:                                                                                                                                                                                                          
     try:
         # LCD
-            setRGB(0,255,0)
+        setRGB(0,255,0)
 
         #Touch Sensor                                                                                                                                                                                                          
         print(grovepi.digitalRead(touch_sensor))
