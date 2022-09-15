@@ -19,8 +19,10 @@ touch_sensor = 4
 temp_sensor = 0 
 # Connect the Grove LED to digital port D4
 led = 3
-global ids = 1
-global temp = 0
+global ids
+ ids = 1
+global temp
+temp = 0
 
 global registros = [
   {'id': ids, 'temperature':"value", 'time':"time-stamp", 'stable': "stability"},
