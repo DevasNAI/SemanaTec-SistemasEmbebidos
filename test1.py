@@ -73,7 +73,7 @@ class Registros():
     def getStable(self):
         return self.stable
     def getRegister(self):
-        return {'id': str(self.id), 'temperature': str(self.temperature) + "° C", 'time': str(self.time), 'stable': str(self.stable)}
+        return {'id': str(self.id), 'temperature': str(self.temperature) + " C", 'time': str(self.time), 'stable': str(self.stable)}
 
 
 grovepi.pinMode(touch_sensor,"INPUT")   
