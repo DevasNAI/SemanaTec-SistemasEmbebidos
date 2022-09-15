@@ -96,8 +96,9 @@ def tempReading():
     temp = grovepi.temp(temp_sensor,'1.1')
     print("temp =", temp)
     time.sleep(.5) 
+    ids += 1
     #   Genera un nuevo registro
-    registrado = Registros(ids+1, 27).getRegister()
+    registrado = Registros(ids, 27).getRegister()
     #   Agrega el registro en los registros de la API
     registros.append(registrado)
 
@@ -164,7 +165,7 @@ def getTemp():
 #         return jsonify({"error": e})
 
 #   Borrar los datos de temperatura
-@app.route('/updated-temperature/<int:id>',methods=['DELETE'])
+@app.route('/updated-temperature/<int:id>', methods=['DELETE'])
 def delTemp(id):
     try:
         item = [reg for reg in registros if reg["id"] == id]
@@ -185,4 +186,6 @@ def delTemp(id):
 #         return jsonify({"error": e})
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=5000)
+    while(True):
+        tempReading()
+        app.run(host="127.0.0.1", port=5000)

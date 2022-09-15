@@ -92,7 +92,8 @@ def sensoring():
     temp = grovepi.temp(temp_sensor,'1.1')
     print("temp =", temp)
     time.sleep(.5) 
-    registrado = Registros(ids+1, 27).getRegister()
+    ids += 1
+    registrado = Registros(ids, 27).getRegister()
     registros.append(registrado)
 
     #Blink the LED
@@ -161,7 +162,8 @@ while(True):
         try:
             #Funciones para publicarlo desde la app
             temp = grovepi.temp(temp_sensor,'1.1')
-            registrado = Registros(ids+1, 27).getRegister()
+            ids += 1
+            registrado = Registros(ids, 27).getRegister()
             registros.append(registrado)
 
             return jsonify( registros )
