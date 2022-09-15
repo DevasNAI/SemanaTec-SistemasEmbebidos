@@ -19,9 +19,16 @@ touch_sensor = 4
 temp_sensor = 0 
 # Connect the Grove LED to digital port D4
 led = 3
+global ids
 ids = 1
+global temp
+temp = 0
 
-registros = []
+global registros
+registros = [
+    {'id': ids, 'temperature':"value", 'time':"time-stamp", 'stable': "stability"},
+    {'id': ids+1, 'temperature':"value", 'time':"time-stamp", 'stable': "stability"}
+]
 
 class Registros():
     """
@@ -119,56 +126,54 @@ app = Flask(__name__)
 
 # print(type(registros))
 
-while(True):
+# Muestra la pagina principal
+@app.route("/")
+def hello():
+    sensoring()
+    return "Conexion exitosa: Datos de Clinica A405"
 
-    # Muestra la pagina principal
-    @app.route("/")
-    def hello():
+#   Muestra los datos de la temperatura
+@app.route('/updated-temperature',methods=['GET'])
+def getTemp():
+    try:
         sensoring()
-        return "Conexion exitosa: Datos de Clinica A405"
+        return jsonify( registros )
+    except (IOError, TypeError) as e:
+        return jsonify({"error": e})
 
-    #   Muestra los datos de la temperatura
-    @app.route('/updated-temperature',methods=['GET'])
-    def getTemp():
-        try:
-            sensoring()
-            return jsonify( registros )
-        except (IOError, TypeError) as e:
-            return jsonify({"error": e})
-
-    @app.route('/get-temperature/<int:id>',methods=['GET'])
-    def getIdTemp(id):
-        try:
+@app.route('/get-temperature/<int:id>',methods=['GET'])
+def getIdTemp(id):
+    try:
             #   Retorna un solo registro de temperatura
-            item = [reg for reg in registros if reg["id"] == id]
-            return jsonify( item[0] )
-        except (IOError, TypeError) as e:
-            return jsonify({"error": e})
+        item = [reg for reg in registros if reg["id"] == id]
+        return jsonify( item[0] )
+    except (IOError, TypeError) as e:
+        return jsonify({"error": e})
 
     #   Borrar los datos de temperatura
-    @app.route('/updated-temperature/<int:id>',methods=['DELETE'])
-    def delTemp(id):
-        try:
-            item = [reg for reg in registros if reg["id"] == id]
-            registros.remove(item[0])
-            return jsonify( item[0] )
+@app.route('/updated-temperature/<int:id>',methods=['DELETE'])
+def delTemp(id):
+    try:
+        item = [reg for reg in registros if reg["id"] == id]
+        registros.remove(item[0])
+        return jsonify( item[0] )
 
 
-        except (IOError, TypeError) as e:
-            return jsonify({"error": e})
+    except (IOError, TypeError) as e:
+        return jsonify({"error": e})
 
-    @app.route('/post-temp',methods=['POST'])
-    def setLCD():
-        try:
+@app.route('/post-temp',methods=['POST'])
+def setLCD():
+    try:
             #Funciones para publicarlo desde la app
-            temp = grovepi.temp(temp_sensor,'1.1')
-            ids += 1
-            registrado = Registros(ids, 27).getRegister()
-            registros.append(registrado)
+        temp = grovepi.temp(temp_sensor,'1.1')
+        ids += 1
+        registrado = Registros(ids, 27).getRegister()
+        registros.append(registrado)
 
-            return jsonify( registros[ids] )
-        except (IOError, TypeError) as e:
-            return jsonify({"error": e})
+        return jsonify( registros[ids] )
+    except (IOError, TypeError) as e:
+        return jsonify({"error": e})
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=5000)

@@ -151,7 +151,8 @@ def delTemp(id):
     try:
         item = [reg for reg in registros if reg["id"] == id]
         registros.remove(item[0])
-        return jsonify( item[0] )
+        print(item)
+        return jsonify( { "sended" } )
 
 
     except (IOError, TypeError) as e:

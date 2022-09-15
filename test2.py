@@ -99,6 +99,9 @@ def sensoring():
     time.sleep(.5) 
     registrado = Registros(ids+1, 27).getRegister()
     registros.append(registrado)
+
+    global undetectedSensor 
+    
     #Blink the LED
     if (temp>=28):
         digitalWrite(led,1)             # Send HIGH to switch on LED
