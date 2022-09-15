@@ -99,6 +99,7 @@ def tempReading():
     temp = grovepi.temp(temp_sensor,'1.1')
     print("temp =", temp)
     time.sleep(.5) 
+    global ids
     ids += 1
     #   Genera un nuevo registro
     registrado = Registros(ids, 27).getRegister()
