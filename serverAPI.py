@@ -61,7 +61,15 @@ class Registros():
 #   Prueba de registros
 registros = [
     Registros(ids, 27).getRegister(),
-    Registros(ids+1, 29).getRegister()
+    Registros(ids+1, 29).getRegister(),
+    {"id":3,"stable":"True","temperature":"27 C","time":"2022-09-15 02:09:03.471549"},
+    {"id":4,"stable":"True","temperature":"27 C","time":"2022-09-15 02:09:10.561097"},
+    {"id":5,"stable":"True","temperature":"27 C","time":"2022-09-15 02:09:13.742259"},
+    {"id":6,"stable":"True","temperature":"27 C","time":"2022-09-15 02:09:19.342881"},
+    {"id":7,"stable":"True","temperature":"27 C","time":"2022-09-15 02:09:23.010771"},
+    {"id":8,"stable":"True","temperature":"27 C","time":"2022-09-15 02:09:26.753546"},
+    {"id":9,"stable":"True","temperature":"27 C","time":"2022-09-15 02:09:43.745423"},
+    {"id":10,"stable":"True","temperature":"27 C","time":"2022-09-15 02:10:54.095374"}
 ]
 
 #   Muestra la página principal
