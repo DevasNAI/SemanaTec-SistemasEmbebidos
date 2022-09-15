@@ -28,15 +28,15 @@ while True:
 sensor = 0
  
 while True:
-try:
-temp = grovepi.temp(sensor,'1.1')
-print "temp =", temp
-time.sleep(.5)
+    try:
+        temp = grovepi.temp(sensor,'1.1')
+        print("temp =", temp)
+        time.sleep(.5)
  
-except KeyboardInterrupt:
-break
-except IOError:
-print "Error"
+    except KeyboardInterrupt:
+        break
+    except IOError:
+        print( "Error" )
 
 #############################################################################
 #LED Socket
