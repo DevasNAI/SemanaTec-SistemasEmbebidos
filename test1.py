@@ -28,7 +28,7 @@ registros = [
 class Registros():
     """
         Clase Registros
-        Esta clase actúa como una estructura de datos que guarda
+        Esta clase actua como una estructura de datos que guarda
         un ID, temperatura, tiempo y estabilidad.
         Variables privadas:
         int     ID              |    Representa el indice
