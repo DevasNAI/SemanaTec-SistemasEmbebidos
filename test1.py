@@ -120,51 +120,52 @@ app = Flask(__name__)
 
 # print(type(registros))
 
+while(True):
 
-# Muestra la pagina principal
-@app.route("/")
-def hello():
-    sensoring()
-    return "Conexion exitosa: Datos de Clinica A405"
-
-#   Muestra los datos de la temperatura
-@app.route('/updated-temperature',methods=['GET'])
-def getTemp():
-    try:
+    # Muestra la pagina principal
+    @app.route("/")
+    def hello():
         sensoring()
-        return jsonify( registros )
-    except (IOError, TypeError) as e:
-        return jsonify({"error": e})
+        return "Conexion exitosa: Datos de Clinica A405"
 
-# @app.route('/updated-temperature/<int:id>',methods=['GET'])
-# def getTemp(id):
-#     try:
-#         #   Retorna un solo registro de temperatura
-#         item = [reg for reg in registros if reg["id"] == id]
-#         return jsonify( item[0] )
-#     except (IOError, TypeError) as e:
-#         return jsonify({"error": e})
+    #   Muestra los datos de la temperatura
+    @app.route('/updated-temperature',methods=['GET'])
+    def getTemp():
+        try:
+            sensoring()
+            return jsonify( registros )
+        except (IOError, TypeError) as e:
+            return jsonify({"error": e})
 
-#   Borrar los datos de temperatura
-@app.route('/updated-temperature/<int:id>',methods=['DELETE'])
-def delTemp(id):
-    try:
-        item = [reg for reg in registros if reg["id"] == id]
-        registros.remove(item[0])
-        return jsonify( item[0] )
+    # @app.route('/updated-temperature/<int:id>',methods=['GET'])
+    # def getTemp(id):
+    #     try:
+    #         #   Retorna un solo registro de temperatura
+    #         item = [reg for reg in registros if reg["id"] == id]
+    #         return jsonify( item[0] )
+    #     except (IOError, TypeError) as e:
+    #         return jsonify({"error": e})
+
+    #   Borrar los datos de temperatura
+    @app.route('/updated-temperature/<int:id>',methods=['DELETE'])
+    def delTemp(id):
+        try:
+            item = [reg for reg in registros if reg["id"] == id]
+            registros.remove(item[0])
+            return jsonify( item[0] )
 
 
-    except (IOError, TypeError) as e:
-        return jsonify({"error": e})
+        except (IOError, TypeError) as e:
+            return jsonify({"error": e})
 
-# @app.route('/sensores/lcd',methods=['PUT'])
-# def setLCD():
-#     try:
-#         print(request.json)
-#         texto = request.json["texto"]
-#         return jsonify( {"texto": texto} )
-#     except (IOError, TypeError) as e:
-#         return jsonify({"error": e})
+    # @app.route('/sensores/lcd',methods=['PUT'])
+    # def setLCD():
+    #     try:
+    #         print(request.json)
+    #         texto = request.json["texto"]
+    #         return jsonify( {"texto": texto} )
+    #     except (IOError, TypeError) as e:
+    #         return jsonify({"error": e})
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=5000)
