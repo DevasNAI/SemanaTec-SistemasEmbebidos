@@ -20,7 +20,7 @@ temp_sensor = 0
 # Connect the Grove LED to digital port D4
 led = 3
 global ids
-ids = 1
+ids = 0
 global temp
 temp = 0
 global undetected 
@@ -132,7 +132,7 @@ def sensoring():
 
     # Show Temperature if touch sensor is touched
     if (grovepi.digitalRead(touch_sensor) == 1):
-        tempReading()
+        temp = grovepi.temp(temp_sensor,'1.1')
         setText(str(temp))
         time.sleep(2)
         setText("")
