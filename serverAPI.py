@@ -9,7 +9,7 @@ ids = 1
 class Registros():
     """
         Clase Registros
-        Esta clase actúa como una estructura de datos que guarda
+        Esta clase actua como una estructura de datos que guarda
         un ID, temperatura, tiempo y estabilidad.
         Variables privadas:
         int     ID              |    Representa el indice
@@ -43,7 +43,7 @@ class Registros():
         return self.id
     #   Regresa la temperatura en formato de grados C
     def getTempString(self):
-        return str(self.temperature) + "° C"
+        return str(self.temperature) + "C"
     #   Cambia el ID
     def setId(self, nid):
         id = nid
@@ -54,7 +54,7 @@ class Registros():
     def getStable(self):
         return self.stable
     def getRegister(self):
-        return {'id': str(self.id), 'temperature': str(self.temperature) + "° C", 'time': str(self.time), 'stable': str(self.stable)}
+        return {'id': str(self.id), 'temperature': str(self.temperature) + "C", 'time': str(self.time), 'stable': str(self.stable)}
 
 
 
@@ -72,10 +72,10 @@ registros = [
     {"id":10,"stable":"True","temperature":"27 C","time":"2022-09-15 02:10:54.095374"}
 ]
 
-#   Muestra la página principal
+#   Muestra la pagina principal
 @app.route("/")
 def hello():
-    return "Conexión exitosa: Datos de Clínica A405"
+    return "Conexion exitosa: Datos de Clinica A405"
 
 #   Muestra los datos de la temperatura
 @app.route('/updated-temperature',methods=['GET'])
@@ -110,4 +110,4 @@ def setLCD():
         return jsonify({"error": e})
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="127.0.0.1", port=5000)
