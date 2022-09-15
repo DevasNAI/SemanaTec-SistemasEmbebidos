@@ -68,11 +68,11 @@ registros = [
 # print(type(registros))
 
 
-#  Muestra la pagina principal
+# Muestra la pagina principal
 @app.route("/")
 def hello():
     sensoring()
-    return "Conexión exitosa: Datos de Clínica A405"
+    return "Conexion exitosa: Datos de Clinica A405"
 
 #   Muestra los datos de la temperatura
 @app.route('/updated-temperature',methods=['GET'])
