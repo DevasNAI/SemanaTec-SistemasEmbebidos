@@ -45,12 +45,12 @@ while True:
         # Show Temperature
         if (grovepi.digitalRead(touch_sensor)==1):
             print(temp)
-            print(math.ceil(temp))
-            print(str(math.ceil(temp)))
-            print(format(str(math.ceil(temp))))
-            upperTemp = int(math.ceil(temp))
-            print(upperTemp)
-            setText(str(upperTemp))
+            # print(math.ceil(temp))
+            # print(str(math.ceil(temp)))
+            # print(format(str(math.ceil(temp))))
+            # upperTemp = int(math.ceil(temp))
+            # print(upperTemp)
+            setText(str(temp))
             time.sleep(2)
             setText("")
         
