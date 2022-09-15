@@ -102,7 +102,7 @@ def tempReading():
     global ids
     ids += 1
     #   Genera un nuevo registro
-    registrado = Registros(ids, 27).getRegister()
+    registrado = Registros(ids,temp).getRegister()
     #   Agrega el registro en los registros de la API
     registros.append(registrado)
 
