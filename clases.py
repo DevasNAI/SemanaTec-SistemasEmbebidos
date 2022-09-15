@@ -1,12 +1,5 @@
-from flask import Flask
-from flask import request, jsonify
 from datetime import datetime
 
-app = Flask(__name__)
-
-# Getting the current date and time
-dt = datetime.now()
-ids = 1
 class Registros():
     """
         Clase Registros
@@ -57,49 +50,8 @@ class Registros():
     def getRegister(self):
         return {'id': str(self.id), 'temperature': str(self.temperature) + "° C", 'time': str(self.time), 'stable': str(self.stable)}
 
-
-
-    
-#   Prueba de registros
-registros = [
-    Registros(ids, 27).getRegister(),
-    Registros(ids+1, 29).getRegister()
-]
-
-
-#   Muestra la página principal
-@app.route("/")
-def hello():
-    return "Conexión exitosa: Datos de Clínica A405"
-
-#   Muestra los datos de la temperatura
-@app.route('/updated-temperature',methods=['GET'])
-def getTemp():
-    try:
-        #   Retorna los registros de temperatura
-        return jsonify( registros )
-    except (IOError, TypeError) as e:
-        return jsonify({"error": e})
-
-#   En teoría debe borrar los datos de temperatura
-@app.route('/updated-temperature',methods=['DELETE'])
-def delTemp():
-    print(request.json)
-    try:
-        registros.remove(request.json)
-    except (IOError, TypeError) as e:
-        return jsonify({"error": e})
+        
 
 
 
-@app.route('/sensores/lcd',methods=['PUT'])
-def setLCD():
-    try:
-        print(request.json)
-        texto = request.json["texto"]
-        return jsonify( {"texto": texto} )
-    except (IOError, TypeError) as e:
-        return jsonify({"error": e})
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+print(Registros(1, 25).getRegister())
