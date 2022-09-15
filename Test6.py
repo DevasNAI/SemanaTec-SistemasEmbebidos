@@ -147,8 +147,7 @@ app = Flask(__name__)
 # Muestra la pagina principal
 @app.route("/")
 def hello():
-    while (undetected):
-        sensoring()
+    sensoring()
     global undetected
     undetected = True
     return "Conexion exitosa: Datos de Clinica A405"
