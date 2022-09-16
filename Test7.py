@@ -156,14 +156,14 @@ def updateDeletedID():
     print("La base de datos ha sido actualizada")
 
 
+
 app = Flask(__name__)
 
 
 # Muestra la pagina principal
 @app.route("/")
 def hello():
-    while (undetected):
-        sensoring()
+    sensoring()
     global undetected
     undetected = True
     return "Conexion exitosa: Datos de Clinica A405"
@@ -194,7 +194,7 @@ def getTempId(id):
         return jsonify({"error": e})
 
 #   Borrar los datos de temperatura
-@app.route('/updated-temperature/<int:id>',methods=['DELETE'])
+@app.route('/delete-temperature/<int:id>',methods=['DELETE'])
 def delTemp(id):
     try:
         #   Busca el registro
@@ -218,5 +218,5 @@ def delTemp(id):
 #         return jsonify({"error": e})
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=5000)
+    app.run(host="192.168.137.6", port=5000)
     tempReading()
