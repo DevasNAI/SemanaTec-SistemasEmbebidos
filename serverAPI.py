@@ -5,7 +5,8 @@ import time
 from datetime import datetime
 
 app = Flask(__name__)
-ids = 1
+global ids
+ids = 0
 class Registros():
     """
         Clase Registros
@@ -60,18 +61,41 @@ class Registros():
 
 #   Prueba de registros
 global registros
+#   Genera una lista de diccionarios con valores de temperatura posibles
 registros = [
     Registros(ids, 27).getRegister(),
     Registros(ids+1, 29).getRegister(),
-    {"id":3,"stable":"True","temperature":"27 C","time":"2022-09-15 02:09:03.471549"},
-    {"id":4,"stable":"True","temperature":"27 C","time":"2022-09-15 02:09:10.561097"},
-    {"id":5,"stable":"True","temperature":"27 C","time":"2022-09-15 02:09:13.742259"},
-    {"id":6,"stable":"True","temperature":"27 C","time":"2022-09-15 02:09:19.342881"},
-    {"id":7,"stable":"True","temperature":"27 C","time":"2022-09-15 02:09:23.010771"},
-    {"id":8,"stable":"True","temperature":"27 C","time":"2022-09-15 02:09:26.753546"},
-    {"id":9,"stable":"True","temperature":"27 C","time":"2022-09-15 02:09:43.745423"},
-    {"id":10,"stable":"True","temperature":"27 C","time":"2022-09-15 02:10:54.095374"}
+    Registros(ids+1, 27).getRegister(),
+    Registros(ids+2, 29.8).getRegister(),
+    Registros(ids+3, 29.3).getRegister(),
+    Registros(ids+4, 29.2).getRegister(),
+    Registros(ids+5, 28).getRegister(),
+    Registros(ids+6, 27.5).getRegister(),
+    Registros(ids+7, 27.3).getRegister(),
+    Registros(ids+8, 27.8).getRegister(),
+    Registros(ids+9, 27.9).getRegister(),
+    Registros(ids+10, 28).getRegister()
 ]
+
+
+def updateDeletedID():
+    i = 0
+    #   Definimos un rango de lista auxiliar para actualizar los valores de ID
+    listRange = list(range(1, len(registros)+1))
+    #   Iteramos en los registros
+    for j in registros:
+        #   Si el id de uno de los registros es diferente al valor en listRange
+        if(j['id'] != listRange[i] ):
+            #   Actualiza el valor actual de ID
+            j['id'] = listRange[i]
+        else:
+            continue
+        #   Incrementa la variable de iteración
+        i += 1
+    print("La base de datos ha sido actualizada")
+
+
+
 
 #   Muestra la pagina principal
 @app.route("/")
@@ -95,35 +119,30 @@ def getTempId(id):
         if(item == []):
             return jsonify( "El registro no existe" )
         else:
+            #   Retorna el registro con el ID brindado
             return jsonify( item[0] )
     except (IOError, TypeError) as e:
         return jsonify({"error": e})
 
 # Borrar los datos de temperatura
-@app.route('/delete-temperature/<int:id>',methods=['DELETE'])
+@app.route('/updated-temperature/<int:id>',methods=['DELETE'])
 def delTemp(id):
     try:
+        #   Busca el registro
         item = [reg for reg in registros if reg["id"] == id]
         if(item == []):
             return jsonify( "El registro no existe" )
         else:
+            #   Elimina el registro del ID establecido
             registros.remove(item[0])
+            #   Actualiza todos los IDs para que siga secuencialmente
+            updateDeletedID()
             return jsonify(item[0])  
     except (IOError, TypeError) as e:
         return jsonify({"error": e})
 
-
-
-@app.route('/sensores/lcd',methods=['PUT'])
-def setLCD():
-    try:
-        print(request.json)
-        texto = request.json["texto"]
-        return jsonify( {"texto": texto} )
-    except (IOError, TypeError) as e:
-        return jsonify({"error": e})
-
 if __name__ == "__main__":
+    #   Define la salida 
     app.run(host="127.0.0.1", port=5000)
 
 

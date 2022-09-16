@@ -75,7 +75,10 @@ registros = [
 ]
 
 
-id = 4
+id = 1
+
+for j in registros:
+    print(j)
 
 # for j in registros:
 #     print(j)
@@ -99,13 +102,14 @@ for j in registros:
 def updateDeletedID():
     i = 0
     #   Definimos un rango de lista auxiliar para actualizar los valores de ID
-    listRange = list(range(1, len(registros)+1))
+    listRange = list(range(len(registros)+1))
     #   Iteramos en los registros
     for j in registros:
         #   Si el id de uno de los registros es diferente al valor en listRange
-        if(j['id'] != tempa[i] ):
+        if(j['id'] != listRange[i] ):
             #   Actualiza el valor actual de ID
-            j['id'] = tempa[i]
+            j['id'] = listRange[i]
+
         else:
             continue
         #   Incrementa la variable de iteración

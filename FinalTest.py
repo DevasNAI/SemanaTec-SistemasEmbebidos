@@ -151,9 +151,9 @@ def updateDeletedID():
     #   Iteramos en los registros
     for j in registros:
         #   Si el id de uno de los registros es diferente al valor en listRange
-        if(j['id'] != tempa[i] ):
+        if(j['id'] != listRange[i] ):
             #   Actualiza el valor actual de ID
-            j['id'] = tempa[i]
+            j['id'] = listRange[i]
         else:
             continue
         #   Incrementa la variable de iteracion
@@ -204,7 +204,7 @@ def getTempId(id):
         return jsonify({"error": e})
 
 #   Borrar los datos de temperatura
-@app.route('/delete-temperature/<int:id>',methods=['DELETE'])
+@app.route('/updated-temperature/<int:id>',methods=['DELETE'])
 def delTemp(id):
     try:
         #   Busca el registro
