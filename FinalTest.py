@@ -17,7 +17,7 @@ touch_sensor = 4
 # Connect the Grove Temperature Sensor to analog port A0
 # SIG,NC,VCC,GND
 temp_sensor = 0 
-# Connect the Grove LED to digital port D4
+# Connect the Grove LED to digital port D3
 led = 3
 global ids
 ids = 0
@@ -111,7 +111,7 @@ def tempReading():
 def toggleLED():
     #   Blink the LED
     #   Temperature Higher to 28 C
-    if (temp>=28):
+    if (temp>=26):
         digitalWrite(led,1)             # Send HIGH to switch on LED
         print ("LED ON!")
         time.sleep(.5)
@@ -136,6 +136,16 @@ def sensoring():
     if (grovepi.digitalRead(touch_sensor) == 1):
         #   Genera una marca de temperatura
         temp = grovepi.temp(temp_sensor,'1.1')
+
+        if (temp>=26):
+        digitalWrite(led,1)             # Send HIGH to switch on LED
+        print ("LED ON!")
+        time.sleep(.5)
+    else:
+        digitalWrite(led,0)             # Send LOW to switch off LED
+        print ("LED OFF!")
+        time.sleep(.5)
+        
         #   Imprime en el LCD
         setText(str(temp))
         time.sleep(2)
