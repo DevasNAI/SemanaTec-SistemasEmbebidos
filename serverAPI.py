@@ -144,16 +144,3 @@ def delTemp(id):
 if __name__ == "__main__":
     #   Define la salida 
     app.run(host="127.0.0.1", port=5000)
-
-
-# Borrar los datos de temperatura
-#@app.route('/updated-temperature/<int:id>',methods=['DELETE'])
-#def delTemp(id):
-#    try:
-#        item = [reg for reg in registros if reg["id"] == id]
-#        registros.remove(item[0])
-#        return jsonify( item[0] )
-
-
- #   except (IOError, TypeError) as e:
-  #      return jsonify({"error": e})
