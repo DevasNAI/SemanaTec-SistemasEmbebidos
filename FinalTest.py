@@ -81,8 +81,10 @@ class Registros():
         return {'id': self.id, 'temperature': str(self.temperature) + " C", 'time': str(self.time), 'stable': str(self.stable)}
 
 def groveSetup():
+    """
+        Definimos entradas y salidas del Hardware
+    """
     grovepi.pinMode(touch_sensor,"INPUT")   
-
     pinMode(led,"OUTPUT") 
                                                                                                                                                                                                    
     time.sleep(1)
@@ -107,7 +109,7 @@ def tempReading():
     registros.append(registrado)
 
 def toggleLED():
-    #Blink the LED
+    #   Blink the LED
     #   Temperature Higher to 28 C
     if (temp>=28):
         digitalWrite(led,1)             # Send HIGH to switch on LED
@@ -121,22 +123,25 @@ def toggleLED():
 def sensoring():
     LCDinit()
 
-    #Touch Sensor                                                                                                                                                                                                          
+    #   Imprime respuesta del Sensor de Tacto                                                                                                                                                                                                           
     print(grovepi.digitalRead(touch_sensor))
 
-    #Temp Sensor
+    #   Ejecuta la lectura del sensor de temperatura
     tempReading()
 
-    #   Turn LED on or off 
+    #   Enciende o apaga el LED
     toggleLED()
 
-    # Show Temperature if touch sensor is touched
+    #   Si el sensor de tacto es presionado
     if (grovepi.digitalRead(touch_sensor) == 1):
+        #   Genera una marca de temperatura
         temp = grovepi.temp(temp_sensor,'1.1')
+        #   Imprime en el LCD
         setText(str(temp))
         time.sleep(2)
         setText("")
         global undetected
+        #   Actualiza la deteccion del sensor de tacto
         undetected = False
 
 def updateDeletedID():
@@ -151,7 +156,7 @@ def updateDeletedID():
             j['id'] = tempa[i]
         else:
             continue
-        #   Incrementa la variable de iteración
+        #   Incrementa la variable de iteracion
         i += 1
     print("La base de datos ha sido actualizada")
 
@@ -163,8 +168,10 @@ app = Flask(__name__)
 # Muestra la pagina principal
 @app.route("/")
 def hello():
+    #   Recopila datos del Hardware
     sensoring()
     global undetected
+    #   Actualiza el valor de deteccion
     undetected = True
     return "Conexion exitosa: Datos de Clinica A405"
 
@@ -172,9 +179,11 @@ def hello():
 @app.route('/updated-temperature',methods=['GET'])
 def getTemp():
     try:
+        #   Mientras no detecte una señal de tacto, recopilara datos el sistema
         while (undetected):
             sensoring()
         global undetected
+        #   Actualiza el valor de deteccion
         undetected = True
         #   Retorna todos los registros de temperatura
         return jsonify( registros )
@@ -189,6 +198,7 @@ def getTempId(id):
         if(item == []):
             return jsonify( "El registro no existe" )
         else:
+            #   Retorna el registro con el ID brindado
             return jsonify( item[0] )
     except (IOError, TypeError) as e:
         return jsonify({"error": e})
@@ -202,21 +212,15 @@ def delTemp(id):
         if(item == []):
             return jsonify( "El registro no existe" )
         else:
+            #   Elimina el registro del ID establecido
             registros.remove(item[0])
+            #   Actualiza todos los IDs para que siga secuencialmente
             updateDeletedID()
             return jsonify(item[0])   
     except (IOError, TypeError) as e:
         return jsonify({"error": e})
 
-# @app.route('/sensores/lcd',methods=['PUT'])
-# def setLCD():
-#     try:
-#         print(request.json)
-#         texto = request.json["texto"]
-#         return jsonify( {"texto": texto} )
-#     except (IOError, TypeError) as e:
-#         return jsonify({"error": e})
-
 if __name__ == "__main__":
+    #   Define la salida 
     app.run(host="192.168.137.6", port=5000)
     tempReading()
