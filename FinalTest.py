@@ -179,7 +179,7 @@ def hello():
 @app.route('/updated-temperature',methods=['GET'])
 def getTemp():
     try:
-        #   Mientras no detecte una señal de tacto, recopilara datos el sistema
+        #   Mientras no detecte una senal de tacto, recopilara datos el sistema
         while (undetected):
             sensoring()
         global undetected
