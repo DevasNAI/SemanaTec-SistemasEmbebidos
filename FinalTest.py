@@ -138,13 +138,13 @@ def sensoring():
         temp = grovepi.temp(temp_sensor,'1.1')
 
         if (temp>=26):
-        digitalWrite(led,1)             # Send HIGH to switch on LED
-        print ("LED ON!")
-        time.sleep(.5)
-    else:
-        digitalWrite(led,0)             # Send LOW to switch off LED
-        print ("LED OFF!")
-        time.sleep(.5)
+            digitalWrite(led,1)             # Send HIGH to switch on LED
+            print ("LED ON!")
+            time.sleep(.5)
+        else:
+            digitalWrite(led,0)             # Send LOW to switch off LED
+            print ("LED OFF!")
+            time.sleep(.5)
         
         #   Imprime en el LCD
         setText(str(temp))
